@@ -1,13 +1,14 @@
 from fastapi import FastAPI
-from chatbot import get_response
+from pydantic import BaseModel
+from database import get_answer_from_db
 
 app = FastAPI()
 
-@app.get("/")
-def read_root():
-    return {"message": "Welcome to the E-commerce Chatbot API!"}
+class ChatRequest(BaseModel):
+    message: str
 
-@app.get("/chat")
-def chat_with_bot(message: str):
-    response = get_response(message)
-    return {"response": response}
+@app.post("/chat")
+async def chat_endpoint(chat_request: ChatRequest):
+    user_message = chat_request.message
+    answer = get_answer_from_db(user_message)
+    return {"response": answer}
