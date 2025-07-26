@@ -10,8 +10,8 @@ cursor = conn.cursor()
 cursor.execute('''
 CREATE TABLE IF NOT EXISTS chatbot_data (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    question TEXT,
-    answer TEXT
+    question TEXT NOT NULL,
+    answer TEXT NOT NULL
 )
 ''')
 
